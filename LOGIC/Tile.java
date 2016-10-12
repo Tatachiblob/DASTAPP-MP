@@ -1,11 +1,9 @@
 package LOGIC;
-
-import javafx.scene.paint.Color;
-
 /**
  *
  * @author Yuta
  */
+import java.awt.Color;
 public class Tile extends Cell {
     
     private boolean isWall;

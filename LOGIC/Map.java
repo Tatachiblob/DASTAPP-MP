@@ -6,7 +6,7 @@ package LOGIC;
 import java.io.*;
 public class Map {
     
-    private String mapName;
+    //private String mapName;
     private int rows, colums;
     private int[][] map;
     public final static int PATH = 0;
@@ -16,8 +16,8 @@ public class Map {
     public final static int MAX_SIZE = 30;
     public final static int MIN_SIZE = 15;
     
-    public Map(String mapName, int rows, int colums){
-        this.mapName = mapName;
+    public Map(/*String mapName,*/ int rows, int colums){
+        //this.mapName = mapName;
         this.rows = rows;
         this.colums = colums;
         this.map = new int[colums][rows];
@@ -29,7 +29,7 @@ public class Map {
         }
     }
     
-    public String getMapName(){return this.mapName;}
+    //public String getMapName(){return this.mapName;}
     public int getRows(){return this.rows;}
     public void setRows(int rows){this.rows = rows;}
     public int getColums(){return this.colums;}
@@ -52,7 +52,7 @@ public class Map {
             }
         }
         
-        return ratCount == 1 && ratCount == 1;
+        return ratCount == 1 && ratCount == 1 && this.rows <= MAX_SIZE && this.colums <= MAX_SIZE && this.rows >= MIN_SIZE && this.colums >= MIN_SIZE;
     }
     
     @Override
@@ -68,7 +68,7 @@ public class Map {
     }
     
     public void saveMap(File f){
-        BufferedWriter bw;
+        BufferedWriter bw = null;
         
         try{
             bw = new BufferedWriter(new FileWriter(f));
@@ -97,14 +97,67 @@ public class Map {
             bw.close();
         }catch(IOException e){
             System.out.println("(Map:saveMap) " + e.toString());
+        }finally{
+            if(bw != null){
+                try{
+                    bw.close();
+                }catch(IOException e2){}
+            }
         }
     }
+    
+    public static Map loadMap(File f){
+        BufferedReader br = null;
+        String line;
+        Map m = null;
+        String con = "";
+        
+        try{
+            br = new BufferedReader(new FileReader(f));
+            int content;
+            int ctr;
+            while((line = br.readLine()) != null){
+                con = con + line + "\n";
+            }
+        }catch(IOException e){
+            System.out.println("(Map:loadMap): " + e.toString());
+        }finally{
+            if(br != null){
+                try{
+                    br.close();
+                }catch(IOException e2){}
+            }
+        }
+        
+        int row = Integer.parseInt(con.substring(0, con.indexOf(" ")));
+        int col = Integer.parseInt(con.substring(con.indexOf(" ") + 1, con.indexOf("\n")));
+        con = con.substring(con.indexOf("\n") + 1);
+        char[] arr = con.replace("\n", "").toCharArray();
+        int x = 0, y = 0;
+        m = new Map(row, col);
+        for(int i = 0; i < arr.length; i++){
+            if(x % row == 0 && x != 0){
+                x = 0;
+                y++;
+            }
+            if(arr[i] == ' '){
+                m.setMap(x, y, PATH);
+            }
+            if(arr[i] == '#'){
+                m.setMap(x, y, WALL);
+            }
+            if(arr[i] == 'G'){
+                m.setMap(x, y, CHEESE);
+            }
+            if(arr[i] == 'S'){
+                m.setMap(x, y, RAT);
+            }
+            x++;
+        }
+        return m;
+    }
     public static void main(String[] args) {
-        Map m = new Map("Kiku", 5, 10);
-        m.setMap(0, 0, 0);
-        m.setMap(1, 1, 0);
-        m.setMap(2, 1, 0);
-        System.out.println(m);
-        m.saveMap(new File("C:\\Users\\Yuta\\Documents\\2nd year 1st term\\Yuta.txt"));
+        Map a = loadMap(new File("C:\\Users\\Yuta\\Downloads\\new-1.txt"));
+        System.out.println(a);
     }
 }

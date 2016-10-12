@@ -1,5 +1,4 @@
 package LOGIC;
-
 /**
  *A special cell that would indicate the goal of a Rat Object
  * @author Yuta
