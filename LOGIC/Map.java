@@ -156,8 +156,4 @@ public class Map {
         }
         return m;
     }
-    public static void main(String[] args) {
-        Map a = loadMap(new File("C:\\Users\\Yuta\\Downloads\\new-1.txt"));
-        System.out.println(a);
-    }
 }

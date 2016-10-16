@@ -5,8 +5,8 @@ package LOGIC;
  * 
  */
 public interface PlayerListener {
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
+    void moveLeft(Map m);
+    void moveRight(Map m);
+    void moveUp(Map m);
+    void moveDown(Map m);
 }

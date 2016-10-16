@@ -12,8 +12,8 @@ public class Tile extends Cell {
     public final static Color WALL_COLOR = Color.BLACK;
     public final static Color PATH_COLOR = Color.WHITE;
     
-    public Tile(int x, int y){
-        super(x, y);
+    public Tile(double x, double y, int posX, int posY){
+        super(x, y, posX, posY);
     }
     
     public void setWall(int wall){

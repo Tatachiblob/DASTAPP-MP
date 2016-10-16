@@ -8,8 +8,8 @@ public class Cheese extends Cell {
     
     public final static Color CHEESE_COLOR = Color.YELLOW;
     
-    public Cheese(int x, int y){
-        super(x, y);
+    public Cheese(double x, double y, int posX, int posY){
+        super(x, y, posX, posY);
     }
     
     @Override

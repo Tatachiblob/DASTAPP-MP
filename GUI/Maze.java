@@ -4,93 +4,81 @@ package GUI;
  * @author Yuta
  */
 import LOGIC.*;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.io.*;
-public class Maze extends JPanel implements ActionListener {
+public class Maze extends JPanel implements ActionListener, KeyListener {
     
     private ArrayList<Cell> tiles;
-    private ArrayList<Rectangle> rects;
+    private Map map;
     
     public Maze(File f){
         this.tiles = new ArrayList<>();
-        this.rects = new ArrayList<>();
-        this.generateMaze(Map.loadMap(f));
-        
-        for(int i = 0; i < tiles.size(); i++){
-            if(tiles.get(i) instanceof Tile){
-                rects.add(new Rectangle(tiles.get(i).getX(), tiles.get(i).getY(), 40, 40));
-            }
-            if(tiles.get(i) instanceof Rat){
-                rects.add(new Rectangle(tiles.get(i).getX(), tiles.get(i).getY(), 40, 40));
-            }
-            if(tiles.get(i) instanceof Cheese){
-                rects.add(new Rectangle(tiles.get(i).getX(), tiles.get(i).getY(), 40, 40));
-            }
-        } 
+        this.map = Map.loadMap(f);
+        this.generateMaze(map);
+        this.addKeyListener(this);
+        this.setFocusable(true);
         Timer t = new Timer(1, this);
         t.start();
     }
     
     public ArrayList<Cell> getTiles(){return this.tiles;}
-    public ArrayList<Rectangle> getRects(){return this.rects;}
     
     public void generateMaze(Map map){
+        int x = 0, y = 0;
         for(int i = 0; i < map.getColums(); i++){
             for(int j = 0; j < map.getRows(); j++){
                 if(map.getMap()[i][j] == Map.PATH){
-                    Tile t = new Tile(i, j);
+                    Tile t = new Tile(x, y, j, i);
                     t.setWall(Tile.NOT_WALL);
                     tiles.add(t);
                 }
                 else if(map.getMap()[i][j] == Map.WALL){
-                    Tile t = new Tile(i, j);
+                    Tile t = new Tile(x, y, j, i);
                     t.setWall(Tile.IS_WALL);
                     tiles.add(t);
                 }
                 else if(map.getMap()[i][j] == Map.RAT){
-                    Rat r = new Rat(i, j);
+                    Rat r = new Rat(x, y, j, i);
                     tiles.add(r);
                 }
                 else if(map.getMap()[i][j] == Map.CHEESE){
-                    Cheese c = new Cheese(i, j);
+                    Cheese c = new Cheese(x, y, j, i);
                     tiles.add(c);
                 }
+                x +=42;
             }
+            y += 42;
+            x = 0;
         }
     }
     
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        
         Graphics2D g2d = (Graphics2D) g;
-        int i = 0;
-        for(Cell c : tiles){
+        
+        for (Cell c : tiles){
             if(c instanceof Tile){
-                if(((Tile) c).getWall()){
-                    g2d.setColor(Color.BLACK);
-                }
-                else{
-                    g2d.setColor(Color.WHITE);
-                }
+                if(((Tile) c).getWall())
+                    g2d.setColor(Tile.WALL_COLOR);
+                else
+                    g2d.setColor(Tile.PATH_COLOR);
             }
-            if(c instanceof Rat){
-                g2d.setColor(Color.YELLOW);
+            else if(c instanceof Rat){
+                g2d.setColor(Rat.RAT_COLOR);
             }
-            
-            if(c instanceof Cheese){
-                g2d.setColor(Color.CYAN);
+            else if(c instanceof Cheese){
+                g2d.setColor(Cheese.CHEESE_COLOR);
             }
-            g2d.draw(rects.get(i));
-            g2d.fill(rects.get(i));
-            i++;
+            g2d.draw(c);
+            g2d.fill(c);
         }
     }
 
@@ -100,16 +88,50 @@ public class Maze extends JPanel implements ActionListener {
     }
     
     public static void main(String[] args){
-        Maze app = new Maze(new File("C:\\Users\\Yuta\\Downloads\\default.map"));
+        Maze app = new Maze(new File("C:\\Users\\Yuta\\Documents\\2nd year 1st term\\default.txt"));
         JFrame f = new JFrame("Hello world!");
         
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(500, 500);
+        f.setSize(950, 950);
         
         f.add(app);
         
-        f.setResizable(true);
         f.setVisible(true);
+        
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        Rat r = null;
+        for(Cell c : tiles){
+            if(c instanceof Rat){
+                r = (Rat)c;
+            }
+        }
+        switch(e.getKeyCode()){
+            case KeyEvent.VK_LEFT:
+                System.out.println("LEFT");
+                r.moveLeft(map);
+                break;
+            case KeyEvent.VK_RIGHT:
+                System.out.println("RIGHT");
+                r.moveRight(map);
+                break;
+            case KeyEvent.VK_UP:
+                System.out.println("UP");
+                r.moveUp(map);
+                break;
+            case KeyEvent.VK_DOWN:
+                System.out.println("DOWN");
+                r.moveDown(map);
+                break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
     
 }
