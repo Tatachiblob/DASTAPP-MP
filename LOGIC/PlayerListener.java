@@ -4,9 +4,10 @@ package LOGIC;
  * @author Yuta
  * 
  */
+import GUI.Maze;
 public interface PlayerListener {
-    void moveLeft(Map m);
-    void moveRight(Map m);
-    void moveUp(Map m);
-    void moveDown(Map m);
+    void moveLeft(Maze m);
+    void moveRight(Maze m);
+    void moveUp(Maze m);
+    void moveDown(Maze m);
 }

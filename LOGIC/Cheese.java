@@ -12,6 +12,11 @@ public class Cheese extends Cell {
         super(x, y, posX, posY);
     }
     
+    public static void goal(){
+        System.out.println("CONGRATULATIONS YOU REACHED THE GOAL");
+        System.exit(0);
+    }
+    
     @Override
     public String toString(){
         return "G";
