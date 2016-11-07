@@ -15,6 +15,10 @@ public class Map {
     public final static int CHEESE = 3;
     public final static int MAX_SIZE = 30;
     public final static int MIN_SIZE = 15;
+    public final static int NORTH = 100;
+    public final static int SOUTH = 200;
+    public final static int EAST = 300;
+    public final static int WEST = 400;
     
     public Map(/*String mapName,*/ int rows, int colums){
         //this.mapName = mapName;
@@ -52,7 +56,7 @@ public class Map {
             }
         }
         
-        return ratCount == 1 && ratCount == 1 && this.rows <= MAX_SIZE && this.colums <= MAX_SIZE && this.rows >= MIN_SIZE && this.colums >= MIN_SIZE;
+        return ratCount == 1 && cheeseCount == 1 && this.rows <= MAX_SIZE && this.colums <= MAX_SIZE && this.rows >= MIN_SIZE && this.colums >= MIN_SIZE;
     }
     
     @Override
@@ -60,7 +64,18 @@ public class Map {
         String map = "";
         for(int i = 0; i < this.colums; i++){
             for(int j = 0; j < this.rows; j++){
-                map = map + this.map[i][j];
+                if (this.map[i][j] == PATH) {
+                    map += " ";
+                }
+                if (this.map[i][j] == WALL) {
+                    map += "#";
+                }
+                if (this.map[i][j] == RAT) {
+                    map += "S";
+                }
+                if (this.map[i][j] == CHEESE) {
+                    map += "G";
+                }
             }
             map = map + "\n";
         }
@@ -156,4 +171,5 @@ public class Map {
         }
         return m;
     }
+    
 }

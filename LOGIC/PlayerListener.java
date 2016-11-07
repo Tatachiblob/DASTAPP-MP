@@ -6,8 +6,8 @@ package LOGIC;
  */
 import GUI.Maze;
 public interface PlayerListener {
-    void moveLeft(Maze m);
-    void moveRight(Maze m);
-    void moveUp(Maze m);
-    void moveDown(Maze m);
+    public void moveLeft(Maze m);
+    public void moveRight(Maze m);
+    public void moveUp(Maze m);
+    public void moveDown(Maze m);
 }

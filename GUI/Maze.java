@@ -11,16 +11,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
-import java.util.ArrayList;
 import java.io.*;
 public class Maze extends JPanel implements ActionListener, KeyListener {
     
     private Cell[][] tiles;
     private Map map;
+    private JFrame frame;
+    private Stack myStack;
+    public int totalX, totalY;
     
-    public Maze(File f){
+    public Maze(File f, JFrame frame){
+        this.frame = frame;
         this.map = Map.loadMap(f);
         this.tiles = new Cell[map.getColums()][map.getRows()];
+        this.myStack = new Stack();
         this.generateMaze();
         this.addKeyListener(this);
         this.setFocusable(true);
@@ -42,32 +46,50 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
     public Map getMap(){return this.map;}
     
     public void generateMaze(){
+        int width = 0, height = 0;
+        if(map.getColums() >= 15 && map.getColums() < 20 || map.getRows() >= 15 && map.getRows() < 20){
+            width = 40;
+            height = 40;
+        }
+        else if(map.getColums() >= 20 && map.getColums() < 26 || map.getRows() >= 20 && map.getRows() < 26){
+            width = 35;
+            height = 35;
+        }
+        else{
+            width = 25;
+            height = 25;
+        }
         int x = 0, y = 0;
         for(int i = 0; i < map.getColums(); i++){
             for(int j = 0; j < map.getRows(); j++){
                 if(map.getMap()[i][j] == Map.PATH){
-                    Tile t = new Tile(x, y, j, i);
+                    Tile t = new Tile(x, y, j, i, width, height);
                     t.setWall(Tile.NOT_WALL);
                     tiles[i][j] = t;
                 }
                 else if(map.getMap()[i][j] == Map.WALL){
-                    Tile t = new Tile(x, y, j, i);
+                    Tile t = new Tile(x, y, j, i, width, height);
                     t.setWall(Tile.IS_WALL);
                     tiles[i][j] = t;
                 }
                 else if(map.getMap()[i][j] == Map.RAT){
-                    Rat r = new Rat(x, y, j, i);
+                    Rat r = new Rat(x, y, j, i, width, height);
                     tiles[i][j] = r;
                 }
                 else if(map.getMap()[i][j] == Map.CHEESE){
-                    Cheese c = new Cheese(x, y, j, i);
+                    Cheese c = new Cheese(x, y, j, i, width, height, frame);
                     tiles[i][j] = c;
                 }
-                x +=42;
+                x += width + 2;
+                
             }
-            y += 42;
+            y += height + 2;
             x = 0;
+            totalX += width + 2;
+            totalY += height + 2;
         }
+        totalX += width;
+        totalY += height;
     }
     
     @Override
@@ -190,18 +212,4 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
         }
         return s;
     }
-    
-    public static void main(String[] args){
-        Maze app = new Maze(new File("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File\\default.txt"));
-        JFrame f = new JFrame("Hello world!");
-        
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(950, 950);
-        
-        f.add(app);
-        
-        f.setVisible(true);
-        
-    }
-
 }

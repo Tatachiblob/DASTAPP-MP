@@ -4,17 +4,26 @@ package LOGIC;
  * @author Yuta
  */
 import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 public class Cheese extends Cell {
     
     public final static Color CHEESE_COLOR = Color.YELLOW;
+    protected JFrame frame;
     
-    public Cheese(double x, double y, int posX, int posY){
-        super(x, y, posX, posY);
+    public Cheese(double x, double y, int posX, int posY, int width, int height, JFrame frame){
+        super(x, y, posX, posY, width, height);
+        this.frame = frame;
+        this.status = Cell.CHEESE_STAT;
     }
     
-    public static void goal(){
-        System.out.println("CONGRATULATIONS YOU REACHED THE GOAL");
-        System.exit(0);
+    public Cheese(double x, double y, int posX, int posY, int width, int height){
+        super(x, y, posX, posY, width, height);
+    }
+    
+    public void goal(){
+        JOptionPane.showMessageDialog(null, "Congratulations", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+        frame.dispose();
     }
     
     @Override
