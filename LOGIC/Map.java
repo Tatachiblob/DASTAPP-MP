@@ -4,6 +4,7 @@ package LOGIC;
  * @author Yuta
  */
 import java.io.*;
+import javax.swing.JOptionPane;
 public class Map {
     
     //private String mapName;
@@ -150,24 +151,29 @@ public class Map {
         char[] arr = con.replace("\n", "").toCharArray();
         int x = 0, y = 0;
         m = new Map(row, col);
-        for(int i = 0; i < arr.length; i++){
-            if(x % row == 0 && x != 0){
-                x = 0;
-                y++;
+        if (row * col == arr.length) {
+            for (int i = 0; i < arr.length; i++) {
+                if (x % row == 0 && x != 0) {
+                    x = 0;
+                    y++;
+                }
+                if (arr[i] == ' ') {
+                    m.setMap(x, y, PATH);
+                }
+                if (arr[i] == '#') {
+                    m.setMap(x, y, WALL);
+                }
+                if (arr[i] == 'G') {
+                    m.setMap(x, y, CHEESE);
+                }
+                if (arr[i] == 'S') {
+                    m.setMap(x, y, RAT);
+                }
+                x++;
             }
-            if(arr[i] == ' '){
-                m.setMap(x, y, PATH);
-            }
-            if(arr[i] == '#'){
-                m.setMap(x, y, WALL);
-            }
-            if(arr[i] == 'G'){
-                m.setMap(x, y, CHEESE);
-            }
-            if(arr[i] == 'S'){
-                m.setMap(x, y, RAT);
-            }
-            x++;
+        }
+        else{
+            
         }
         return m;
     }

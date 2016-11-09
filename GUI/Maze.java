@@ -17,14 +17,15 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
     private Cell[][] tiles;
     private Map map;
     private JFrame frame;
-    private Stack myStack;
+    private Algorithm algo;
+    private AnotherAlgo anotherOne;
     public int totalX, totalY;
     
     public Maze(File f, JFrame frame){
         this.frame = frame;
         this.map = Map.loadMap(f);
         this.tiles = new Cell[map.getColums()][map.getRows()];
-        this.myStack = new Stack();
+        this.algo = new Algorithm(this);
         this.generateMaze();
         this.addKeyListener(this);
         this.setFocusable(true);
@@ -33,6 +34,8 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
     }
     
     public Cell[][] getTiles(){return this.tiles;}
+    public JFrame getFrame(){return this.frame;}
+    public void setAnotherAlgo(AnotherAlgo a){this.anotherOne = a;}
     public void swap(int x1, int y1, int x2, int y2){
         this.tiles[y1][x1].setPosX(x2);
         this.tiles[y1][x1].setPosY(y2);
@@ -168,20 +171,24 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
         }
         switch(e.getKeyCode()){
             case KeyEvent.VK_LEFT:
-                System.out.println("LEFT");
-                r.moveLeft(this);
+                if(r != null)
+                    r.moveLeft(this);
                 break;
             case KeyEvent.VK_RIGHT:
-                System.out.println("RIGHT");
-                r.moveRight(this);
+                if(r != null)
+                    r.moveRight(this);
                 break;
             case KeyEvent.VK_UP:
-                System.out.println("UP");
-                r.moveUp(this);
+                if(r != null)
+                    r.moveUp(this);
                 break;
             case KeyEvent.VK_DOWN:
-                System.out.println("DOWN");
-                r.moveDown(this);
+                if(r != null)
+                    r.moveDown(this);
+                break;
+            case KeyEvent.VK_ENTER:
+                if(r != null)
+                    algo.start();
                 break;
         }
     }

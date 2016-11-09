@@ -31,7 +31,7 @@ public class MapEditor extends JPanel implements MouseListener, ActionListener, 
     
     public MapEditor(int row, int col, String name){
         this.map = new Map(row, col);
-        this.f = new File("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File\\" + name + ".map");
+        this.f = new File("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File\\" + name + ".txt");
         this.rects = new Cell[map.getColums()][map.getRows()];
         this.initScreen();
         addMouseListener(this);

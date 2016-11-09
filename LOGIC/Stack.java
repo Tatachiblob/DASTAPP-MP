@@ -1,7 +1,9 @@
 package LOGIC;
-
+/**
+ *
+ * @author Yuta 11512709
+ */
 import java.util.ArrayList;
-
 public class Stack {
 
     private ArrayList<Object> list;
@@ -31,7 +33,7 @@ public class Stack {
     }
 
     public boolean isEmpty() {
-        return list.size() == 0;
+        return list.isEmpty();
     }
 
     public int size() {
