@@ -35,24 +35,28 @@ public class Algorithm implements ActionListener {
             myStack.push(new Node(r.getPosX(), r.getPosY()));
             visitedNodes.add(new Node(r.getPosX(), r.getPosY()));
             r.moveUp(maze);
+            ((Tile)maze.getTiles()[r.getPosY() + 1][r.getPosX()]).setImg(Tile.VISITED_IMG);
         }
         
         else if(isPath(maze, SOUTH) && !hasPassed(new Node(r.getPosX(), r.getPosY() + 1))){
             myStack.push(new Node(r.getPosX(), r.getPosY()));
             visitedNodes.add(new Node(r.getPosX(), r.getPosY()));
             r.moveDown(maze);
+            ((Tile)maze.getTiles()[r.getPosY() - 1][r.getPosX()]).setImg(Tile.VISITED_IMG);
         }
         
         else if(isPath(maze, WEST) && !hasPassed(new Node(r.getPosX() + 1, r.getPosY()))){
             myStack.push(new Node(r.getPosX(), r.getPosY()));
             visitedNodes.add(new Node(r.getPosX(), r.getPosY()));
             r.moveRight(maze);
+            ((Tile)maze.getTiles()[r.getPosY()][r.getPosX() - 1]).setImg(Tile.VISITED_IMG);
         }
         
         else if(isPath(maze, EAST) && !hasPassed(new Node(r.getPosX() - 1, r.getPosY()))){
             myStack.push(new Node(r.getPosX(), r.getPosY()));
             visitedNodes.add(new Node(r.getPosX(), r.getPosY()));
             r.moveLeft(maze);
+            ((Tile)maze.getTiles()[r.getPosY()][r.getPosX() + 1]).setImg(Tile.VISITED_IMG);
         }
         
         else{
@@ -67,29 +71,36 @@ public class Algorithm implements ActionListener {
                 stepBack(maze,(Node)myStack.pop());
             }
         }
-        /*
-        System.out.println("Passed Nodes");
-        for(Node print : visitedNodes)
-            System.out.println(print);
-*/
+    }
+    
+    public Stack getPathCoordinates(){
+        Stack a = new Stack();
+        do{
+            a.push(myStack.pop());
+        }while(!myStack.isEmpty());
+        return a;
     }
     
     private void stepBack(Maze maze, Node node){
         Rat r = maze.findRat();
         if(r.getPosX() == node.getX() && r.getPosY() == node.getY() - 1){
             r.moveDown(maze);
+            ((Tile)maze.getTiles()[r.getPosY() - 1][r.getPosX()]).setImg(Tile.PATH_IMG);
         }
         
         if(r.getPosX() == node.getX() && r.getPosY() == node.getY() + 1){
             r.moveUp(maze);
+            ((Tile)maze.getTiles()[r.getPosY() + 1][r.getPosX()]).setImg(Tile.PATH_IMG);
         }
         
         if(r.getPosX() == node.getX() + 1 && r.getPosY() == node.getY()){
             r.moveLeft(maze);
+            ((Tile)maze.getTiles()[r.getPosY()][r.getPosX() + 1]).setImg(Tile.PATH_IMG);
         }
         
         if(r.getPosX() == node.getX() - 1 && r.getPosY() == node.getY()){
             r.moveRight(maze);
+            ((Tile)maze.getTiles()[r.getPosY()][r.getPosX() - 1]).setImg(Tile.PATH_IMG);
         }
     }
     

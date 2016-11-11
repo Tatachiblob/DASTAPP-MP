@@ -27,6 +27,7 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
         this.tiles = new Cell[map.getColums()][map.getRows()];
         this.algo = new Algorithm(this);
         this.generateMaze();
+        this.anotherOne = new AnotherAlgo(this);
         this.addKeyListener(this);
         this.setFocusable(true);
         Timer t = new Timer(1, this);
@@ -53,14 +54,20 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
         if(map.getColums() >= 15 && map.getColums() < 20 || map.getRows() >= 15 && map.getRows() < 20){
             width = 40;
             height = 40;
+            totalX = map.getColums() * 40;
+            totalY = map.getRows() * 40;
         }
         else if(map.getColums() >= 20 && map.getColums() < 26 || map.getRows() >= 20 && map.getRows() < 26){
             width = 35;
             height = 35;
+            totalX = map.getColums() * 35;
+            totalY = map.getRows() * 35;
         }
         else{
             width = 25;
             height = 25;
+            totalX = map.getColums() * 25;
+            totalY = map.getRows() * 25;
         }
         int x = 0, y = 0;
         for(int i = 0; i < map.getColums(); i++){
@@ -88,36 +95,52 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
             }
             y += height + 2;
             x = 0;
-            totalX += width + 2;
-            totalY += height + 2;
         }
-        totalX += width;
-        totalY += height;
     }
     
     @Override
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2d = (Graphics2D)g;
-        
+        int width = 0, height = 0;
+        if(map.getColums() >= 15 && map.getColums() < 20 || map.getRows() >= 15 && map.getRows() < 20){
+            width = 40;
+            height = 40;
+        }
+        else if(map.getColums() >= 20 && map.getColums() < 26 || map.getRows() >= 20 && map.getRows() < 26){
+            width = 35;
+            height = 35;
+        }
+        else{
+            width = 25;
+            height = 25;
+        }
+        int x = 0, y = 0;
         for (int i = 0; i < map.getColums(); i++) {
             for (int j = 0; j < map.getRows(); j++) {
                 if (tiles[i][j] instanceof Tile) {
                     if (((Tile) tiles[i][j]).getWall()) {
-                        g2d.setColor(Tile.WALL_COLOR);
+                        //g2d.setColor(tiles[i][j].getColor());
+                        g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                     } else {
-                        g2d.setColor(Tile.PATH_COLOR);
+                        //g2d.setColor(tiles[i][j].getColor());
+                        g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                     }
                 } 
                 else if (tiles[i][j] instanceof Rat) {
-                    g2d.setColor(Rat.RAT_COLOR);
+                    //g2d.setColor(tiles[i][j].getColor());
+                        g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                 } 
                 else if (tiles[i][j] instanceof Cheese) {
-                    g2d.setColor(Cheese.CHEESE_COLOR);
+                    //g2d.setColor(tiles[i][j].getColor());
+                        g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                 }
-                g2d.draw(tiles[i][j]);
-                g2d.fill(tiles[i][j]);
+                //g2d.draw(tiles[i][j]);
+                //g2d.fill(tiles[i][j]);
+                x += width;
             }
+            y += height;
+            x = 0;
         }
     }
 
@@ -171,8 +194,9 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
         }
         switch(e.getKeyCode()){
             case KeyEvent.VK_LEFT:
-                if(r != null)
+                if(r != null){
                     r.moveLeft(this);
+                }
                 break;
             case KeyEvent.VK_RIGHT:
                 if(r != null)
@@ -189,6 +213,10 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
             case KeyEvent.VK_ENTER:
                 if(r != null)
                     algo.start();
+                break;
+            case KeyEvent.VK_BACK_SPACE:
+                if(r != null)
+                   // System.out.println(anotherOne);
                 break;
         }
     }

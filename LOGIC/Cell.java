@@ -6,6 +6,9 @@ package LOGIC;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
 public abstract class Cell extends Rectangle{
     
     protected double x, y;
@@ -16,6 +19,7 @@ public abstract class Cell extends Rectangle{
     public final static int WALL_STAT = 1;
     public final static int RAT_STAT = 2;
     public final static int CHEESE_STAT = 3;
+    public BufferedImage img;
     
     public Cell(double x, double y, int posX, int posY, int width, int height){
         this.x = x;
@@ -29,6 +33,13 @@ public abstract class Cell extends Rectangle{
     }
     
     public Cell(){}
+    public void setImg(String path){
+        try{
+            img = ImageIO.read(new File(path));
+        }catch(IOException e){
+            System.out.println("(Cell:setImg) " + e.toString());
+        }
+    }
     public int getPosX(){return this.posX;}
     public int getPosY(){return this.posY;}
     public int getStatus(){return this.status;}

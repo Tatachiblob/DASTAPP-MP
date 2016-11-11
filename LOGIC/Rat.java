@@ -3,28 +3,27 @@ package LOGIC;
  *A special Cell that can move around
  * @author Yuta
  */
+import java.io.*;
 import java.awt.Color;
 import GUI.Maze;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 public class Rat extends Cell implements PlayerListener{
     
-    public final static Color RAT_COLOR = Color.GRAY;
-    private Image img;
-    public final static Image UP = new ImageIcon("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\UP.jpg").getImage();
-    public final static Image DOWN = new ImageIcon("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\DOWN.jpg").getImage();
-    public final static Image LEFT = new ImageIcon("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\LEFT.jpg").getImage();
-    public final static Image RIGHT = new ImageIcon("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\RIGHT.jpg").getImage();
-    public final static Image DEAFULT = new ImageIcon("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\DEFAULT.jpg").getImage();
+    public final static Color RAT_COLOR = Color.BLUE;
+    public final static String RAT_IMG = "../DASTAPPMP/resource/Cow.png";
+    //public final static String RAT_IMG = "C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\resource\\Cow.png";
     
     public Rat(double x, double y, int posX, int posY, int width, int height){
         super(x, y, posX, posY, width, height);
         this.status = Cell.RAT_STAT;
-        this.img = DEAFULT;
+        this.curColor = RAT_COLOR;
+        try{
+            img = ImageIO.read(new File(RAT_IMG));
+        }catch(IOException e){
+            System.out.println("(Rat:Rat) " + e.toString());
+        }
     }
-    
-    public Image getImage(){return this.img;}
-    public void setImage(Image img){this.img = img;}
     
     @Override
     public void moveLeft(Maze m){

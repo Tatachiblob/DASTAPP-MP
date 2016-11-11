@@ -16,6 +16,7 @@ public class MapEditor extends JPanel implements MouseListener, ActionListener, 
     private Cell[][] rects;
     private JFrame frame;
     public int totalX, totalY;
+    public Dimension d;
     
     public MapEditor(File f) {
         this.map = Map.loadMap(f);
@@ -31,7 +32,8 @@ public class MapEditor extends JPanel implements MouseListener, ActionListener, 
     
     public MapEditor(int row, int col, String name){
         this.map = new Map(row, col);
-        this.f = new File("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File\\" + name + ".txt");
+        this.f = new File("../DASTAPPMP/Save File/" + name + ".txt");
+        //this.f = new File("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File\\" + name + ".txt");
         this.rects = new Cell[map.getColums()][map.getRows()];
         this.initScreen();
         addMouseListener(this);
@@ -41,25 +43,30 @@ public class MapEditor extends JPanel implements MouseListener, ActionListener, 
         t.start();
     }
     
+    private void setDimension(Dimension d){this.d = d;}
+    
     public void setFrame(JFrame f){this.frame = f;}
+    public Map getMap(){return map;}
     
     public void initScreen(){
         int width = 0, height = 0;
-        if(map.getColums() >= 15 && map.getColums() < 20 || map.getRows() >= 15 && map.getRows() < 20){
+        if(map.getColums() >= 15 && map.getColums() < 20 && map.getRows() >= 15 && map.getRows() < 20){
             width = 40;
             height = 40;
-            System.out.println("SMALL");
-        }
-        else if(map.getColums() >= 20 && map.getColums() < 26 || map.getRows() >= 20 && map.getRows() < 26){
+        }   
+        else if(map.getColums() >= 20 && map.getColums() < 26 && map.getRows() >= 20 && map.getRows() < 26){
             width = 35;
             height = 35;
-            System.out.println("MID");
+        }
+        else if(map.getColums() >= 26 && map.getColums() <= 30 && map.getRows() >= 26 && map.getRows() <= 30){
+            width = 25;
+            height = 25;
         }
         else{
             width = 25;
             height = 25;
-            System.out.println("LARGE");
         }
+        
         int x = 0, y = 0;
         for(int i = 0; i < map.getColums(); i++){
             for(int j = 0; j < map.getRows(); j++){

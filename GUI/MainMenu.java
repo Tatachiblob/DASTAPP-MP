@@ -20,7 +20,8 @@ public class MainMenu extends JFrame implements ActionListener {
         super("Machine Project");
         this.bEditMap = new JButton("Edit Map");
         this.bLoadMap = new JButton("Load Map");
-        this.file = new JFileChooser("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File");
+        this.file = new JFileChooser("../DASTAPPMP/Save File");
+        //this.file = new JFileChooser("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File");
         this.bEditMap.addActionListener(this);
         this.bLoadMap.addActionListener(this);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
