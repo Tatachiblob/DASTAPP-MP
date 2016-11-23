@@ -6,10 +6,7 @@ package GUI;
 import LOGIC.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 public class Maze extends JPanel implements ActionListener, KeyListener {
@@ -27,13 +24,14 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
         this.tiles = new Cell[map.getColums()][map.getRows()];
         this.algo = new Algorithm(this);
         this.generateMaze();
-        this.anotherOne = new AnotherAlgo(this);
+        //this.anotherOne = new AnotherAlgo(this);
         this.addKeyListener(this);
         this.setFocusable(true);
         Timer t = new Timer(1, this);
         t.start();
     }
     
+    public Algorithm getAlgorithm(){return this.algo;}
     public Cell[][] getTiles(){return this.tiles;}
     public JFrame getFrame(){return this.frame;}
     public void setAnotherAlgo(AnotherAlgo a){this.anotherOne = a;}
@@ -120,23 +118,18 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
             for (int j = 0; j < map.getRows(); j++) {
                 if (tiles[i][j] instanceof Tile) {
                     if (((Tile) tiles[i][j]).getWall()) {
-                        //g2d.setColor(tiles[i][j].getColor());
                         g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
-                    } else {
-                        //g2d.setColor(tiles[i][j].getColor());
+                    } 
+                    else {
                         g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                     }
                 } 
                 else if (tiles[i][j] instanceof Rat) {
-                    //g2d.setColor(tiles[i][j].getColor());
                         g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                 } 
                 else if (tiles[i][j] instanceof Cheese) {
-                    //g2d.setColor(tiles[i][j].getColor());
                         g2d.drawImage(tiles[i][j].img, x, y, width, height, null);
                 }
-                //g2d.draw(tiles[i][j]);
-                //g2d.fill(tiles[i][j]);
                 x += width;
             }
             y += height;
@@ -214,10 +207,12 @@ public class Maze extends JPanel implements ActionListener, KeyListener {
                 if(r != null)
                     algo.start();
                 break;
+                /*
             case KeyEvent.VK_BACK_SPACE:
                 if(r != null)
                    // System.out.println(anotherOne);
                 break;
+                */
         }
     }
 

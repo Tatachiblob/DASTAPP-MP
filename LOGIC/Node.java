@@ -6,7 +6,6 @@ package LOGIC;
 public class Node {
     
     private int x, y;
-    //private boolean hasVisited;
     
     public Node(int x, int y){
         this.x = x;
@@ -15,8 +14,6 @@ public class Node {
     
     public int getX(){return this.x;}
     public int getY(){return this.y;}
-    //public void setHasVisited(boolean b){this.hasVisited = b;}
-    //public boolean getIsIntersect(){return this.hasVisited;}
     
     @Override
     public boolean equals(Object o){

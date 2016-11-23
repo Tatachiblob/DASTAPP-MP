@@ -31,7 +31,30 @@ public class AnotherAlgo implements ActionListener{
     }
     
     public void solveMaze(Maze maze){
+        Cell[][] cells = maze.getTiles();
         
+        if(isPath(curNode, NORTH) && !hasPassed(new Node(curNode.getX(), curNode.getY() - 1))){
+            myQueue.enqueue(new Node(curNode.getX(), curNode.getY() - 1));
+            visitedNodes.add(new Node(curNode.getX(), curNode.getY() - 1));
+        }
+        
+        if(isPath(curNode, SOUTH) && !hasPassed(new Node(curNode.getX(), curNode.getY() + 1))){
+            myQueue.enqueue(new Node(curNode.getX(), curNode.getY() + 1));
+            visitedNodes.add(new Node(curNode.getX(), curNode.getY() + 1));
+        }
+        
+        if(isPath(curNode, EAST) && !hasPassed(new Node(curNode.getX() - 1, curNode.getY()))){
+            myQueue.enqueue(new Node(curNode.getX() - 1, curNode.getY()));
+            visitedNodes.add(new Node(curNode.getX() - 1, curNode.getY()));
+        }
+        
+        if(isPath(curNode, WEST) && !hasPassed(new Node(curNode.getX() + 1, curNode.getY()))){
+            myQueue.enqueue(new Node(curNode.getX() + 1, curNode.getY()));
+            visitedNodes.add(new Node(curNode.getX() + 1, curNode.getY()));
+        }
+        else{
+            curNode = (Node)myQueue.dequeue();
+        }
     }
     
     private boolean isPath(Node node, int direction){

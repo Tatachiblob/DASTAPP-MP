@@ -1,5 +1,4 @@
 package GUI;
-
 /**
  *
  * @author Yuta 11512709
@@ -9,7 +8,7 @@ import java.awt.event.*;
 import java.awt.*;
 import LOGIC.*;
 import java.io.File;
-public class MapEditor extends JPanel implements MouseListener, ActionListener, KeyListener{
+public class MapEditor extends JPanel implements MouseListener, ActionListener, KeyListener, WindowListener{
     
     private Map map;
     private File f;
@@ -33,7 +32,6 @@ public class MapEditor extends JPanel implements MouseListener, ActionListener, 
     public MapEditor(int row, int col, String name){
         this.map = new Map(row, col);
         this.f = new File("../DASTAPPMP/Save File/" + name + ".txt");
-        //this.f = new File("C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\Save File\\" + name + ".txt");
         this.rects = new Cell[map.getColums()][map.getRows()];
         this.initScreen();
         addMouseListener(this);
@@ -189,4 +187,28 @@ public class MapEditor extends JPanel implements MouseListener, ActionListener, 
 
     @Override
     public void keyReleased(KeyEvent e) {}
+    
+    @Override
+    public void windowOpened(WindowEvent e) {}
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        map.saveMap(f);
+        frame.dispose();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {}
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }

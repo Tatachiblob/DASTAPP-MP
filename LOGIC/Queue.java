@@ -49,7 +49,7 @@ public class Queue {
     public String toString(){
         String str = "";
         for(int i = 0; i < list.size(); i++){
-            str += list.get(i).toString() + "   ";
+            str += list.get(i).toString() + " ";
         }
         return str;
     }

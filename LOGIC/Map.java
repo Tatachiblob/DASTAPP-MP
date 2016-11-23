@@ -4,7 +4,6 @@ package LOGIC;
  * @author Yuta
  */
 import java.io.*;
-import javax.swing.JOptionPane;
 public class Map {
     
     //private String mapName;
@@ -21,12 +20,10 @@ public class Map {
     public final static int EAST = 300;
     public final static int WEST = 400;
     
-    public Map(/*String mapName,*/ int rows, int colums){
-        //this.mapName = mapName;
+    public Map( int rows, int colums){
         this.rows = rows;
         this.colums = colums;
         this.map = new int[colums][rows];
-        //Initialize Everything to a wall
         for(int x = 0; x < colums; x++){
             for(int y = 0; y < rows; y++){
                 map[x][y] = WALL;
@@ -34,7 +31,6 @@ public class Map {
         }
     }
     
-    //public String getMapName(){return this.mapName;}
     public int getRows(){return this.rows;}
     public void setRows(int rows){this.rows = rows;}
     public int getColums(){return this.colums;}

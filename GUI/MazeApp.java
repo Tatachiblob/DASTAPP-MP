@@ -3,9 +3,11 @@ package GUI;
  *
  * @author Yuta 11512709
  */
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import javax.swing.JFrame;
-public class MazeApp extends JFrame{
+public class MazeApp extends JFrame implements WindowListener{
     
     private Maze maze;
     private MapEditor editor;
@@ -26,6 +28,7 @@ public class MazeApp extends JFrame{
         else{
             this.setSize(765, 789);
         }
+        addWindowListener(this);
         this.setVisible(false);
     }
     
@@ -45,6 +48,33 @@ public class MazeApp extends JFrame{
         else{
             this.setSize(825, 848);
         }
+        addWindowListener(this);
         this.setVisible(false);
     }
+
+    @Override
+    public void windowOpened(WindowEvent e) {}
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if(maze != null)
+            maze.getAlgorithm().stop();
+        if(editor != null)
+            editor.windowClosing(e);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {}
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }

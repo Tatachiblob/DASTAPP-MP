@@ -4,11 +4,10 @@ package LOGIC;
  * @author Yuta
  */
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 public abstract class Cell extends Rectangle{
     
     protected double x, y;
@@ -19,7 +18,7 @@ public abstract class Cell extends Rectangle{
     public final static int WALL_STAT = 1;
     public final static int RAT_STAT = 2;
     public final static int CHEESE_STAT = 3;
-    public BufferedImage img;
+    public Image img;
     
     public Cell(double x, double y, int posX, int posY, int width, int height){
         this.x = x;
@@ -34,11 +33,7 @@ public abstract class Cell extends Rectangle{
     
     public Cell(){}
     public void setImg(String path){
-        try{
-            img = ImageIO.read(new File(path));
-        }catch(IOException e){
-            System.out.println("(Cell:setImg) " + e.toString());
-        }
+        this.img = new ImageIcon(path).getImage();
     }
     public int getPosX(){return this.posX;}
     public int getPosY(){return this.posY;}

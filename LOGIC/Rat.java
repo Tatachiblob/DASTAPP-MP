@@ -3,26 +3,18 @@ package LOGIC;
  *A special Cell that can move around
  * @author Yuta
  */
-import java.io.*;
 import java.awt.Color;
 import GUI.Maze;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 public class Rat extends Cell implements PlayerListener{
     
     public final static Color RAT_COLOR = Color.BLUE;
     public final static String RAT_IMG = "../DASTAPPMP/resource/Cow.png";
-    //public final static String RAT_IMG = "C:\\Users\\Yuta\\Documents\\NetBeansProjects\\DASTAPPMP\\resource\\Cow.png";
     
     public Rat(double x, double y, int posX, int posY, int width, int height){
         super(x, y, posX, posY, width, height);
         this.status = Cell.RAT_STAT;
         this.curColor = RAT_COLOR;
-        try{
-            img = ImageIO.read(new File(RAT_IMG));
-        }catch(IOException e){
-            System.out.println("(Rat:Rat) " + e.toString());
-        }
+        setImg(RAT_IMG);
     }
     
     @Override
@@ -39,8 +31,6 @@ public class Rat extends Cell implements PlayerListener{
                 ((Cheese)m.getTiles()[posY][posX - 1]).goal();
             }
         }
-        //System.out.println("(x, y) = (" + posX + ", " + posY + ")");
-        
     }
     
     @Override
@@ -57,7 +47,6 @@ public class Rat extends Cell implements PlayerListener{
                 ((Cheese)m.getTiles()[posY][posX + 1]).goal();
             }
         }
-        //System.out.println("(x, y) = (" + posX + ", " + posY + ")");
     }
 
     @Override
@@ -74,7 +63,6 @@ public class Rat extends Cell implements PlayerListener{
                 ((Cheese)m.getTiles()[posY - 1][posX]).goal();
             }
         }
-        //System.out.println("(x, y) = (" + posX + ", " + posY + ")");
     }
 
     @Override
@@ -91,7 +79,6 @@ public class Rat extends Cell implements PlayerListener{
                 ((Cheese)m.getTiles()[posY + 1][posX]).goal();
             }
         }
-        //System.out.println("(x, y) = (" + posX + ", " + posY + ")");
     }
     
     @Override

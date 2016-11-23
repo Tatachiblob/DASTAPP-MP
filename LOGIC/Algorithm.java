@@ -6,8 +6,6 @@ package LOGIC;
 import GUI.Maze;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -106,13 +104,11 @@ public class Algorithm implements ActionListener {
     
     private boolean hasPassed(Node check){
         if(visitedNodes.isEmpty()){
-            //System.out.println("Empty");
             return false;
         }
         else{
             for(Node n : visitedNodes){
                 if(check.equals(n)){
-                    //System.out.println("Found Node");
                     return true;
                 }
             }
@@ -135,13 +131,11 @@ public class Algorithm implements ActionListener {
                             return true;
                         }
                         else{
-                            //System.out.println("CANNOT PASS(N1)");
                             return false;
                         }
                     }
                 }
                 else{
-                    //System.out.println("CANNOT PASS(N2)");
                     return false;
                 }
                 break;
@@ -157,13 +151,11 @@ public class Algorithm implements ActionListener {
                             return true;
                         }
                         else{
-                            //System.out.println("CANNOT PASS(S1)");
                             return false;
                         }
                     }
                 }
                 else{
-                    //System.out.println("CANNOT PASS(S2)");
                     return false;
                 }
                 break;
@@ -179,13 +171,11 @@ public class Algorithm implements ActionListener {
                             return true;
                         }
                         else{
-                            //System.out.println("CANNOT PASS(E1)");
                             return false;
                         }
                     }
                 }
                 else{
-                   //System.out.println("CANNOT PASS(E2)");
                     return false;
                 }
                 break;
@@ -201,12 +191,11 @@ public class Algorithm implements ActionListener {
                             return true;
                         }
                         else{
-                            //System.out.println("CANNOT PASS(W1)");
+                            return false;
                         }
                     }
                 }
                 else{
-                    //System.out.println("CANNOT PASS(W2)");
                     return false;
                 }
                 break;

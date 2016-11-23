@@ -42,11 +42,21 @@ public class Stack {
 
     @Override
     public String toString() {
+        String str = "";
+        str += "------------------\n";
+        for(int i = list.size() - 1; i >= 0; i--){
+            str += list.get(i).toString();
+            str += "\n";
+        }
+        str += "------------------";
+        /*
         StringBuilder s = new StringBuilder();
         s.append("");
         for (int i = 0; i < list.size(); i++) {
             s.append(list.toString() + "\n");
         }
         return s.toString();
+        */
+        return str;
     }
 }
